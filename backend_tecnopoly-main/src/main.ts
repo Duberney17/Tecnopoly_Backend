@@ -13,23 +13,14 @@ async function bootstrap() {
   //   (no definido)        → permite cualquier origen por defecto
   const rawOrigins = process.env.CORS_ORIGINS;
 
-  let corsOrigin: string | string[] | boolean;
-
-  if (!rawOrigins || rawOrigins === '*') {
-    corsOrigin = true;             // Refleja el origen de la request (compatible con credentials)
-  } else {
-    corsOrigin = rawOrigins.split(',').map(o => o.trim());
-  }
-
   app.enableCors({
-    origin: corsOrigin,
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-    credentials: true,
+    credentials: false,
     preflightContinue: false,
     optionsSuccessStatus: 204,
   });
-  // ─────────────────────────────────────────────────────────────────────────
 
   app.useGlobalPipes(
     new ValidationPipe({
